@@ -1,0 +1,2 @@
+shrinkwrap-syndesis-extension
+====
