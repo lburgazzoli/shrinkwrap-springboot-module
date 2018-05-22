@@ -35,6 +35,12 @@ public class SpringBootModuleArchiveTest {
 
         assertThat(libDirectory.getChildren())
             .extracting("path")
+            .contains(new BasicPath("/lib/slf4j-simple-1.7.25.jar"));
+        assertThat(libDirectory.getChildren())
+            .extracting("path")
+            .contains(new BasicPath("/lib/slf4j-api-1.7.25.jar"));
+        assertThat(libDirectory.getChildren())
+            .extracting("path")
             .contains(new BasicPath("/lib/shrinkwrap-api-1.2.6.jar"));
         assertThat(libDirectory.getChildren())
             .extracting("path")
@@ -43,6 +49,11 @@ public class SpringBootModuleArchiveTest {
 
     private static SpringBootModuleArchive prepareSpringBootModuleArchive() {
         return ShrinkWrap.create(SpringBootModuleArchive.class)
+            .addAsLibraries(
+                Maven.resolver()
+                    .resolve("org.slf4j:slf4j-simple:1.7.25")
+                    .withTransitivity()
+                    .as(JavaArchive.class))
             .addAsLibraries(
                 Maven.resolver()
                     .resolve("org.jboss.shrinkwrap:shrinkwrap-api:1.2.6")
